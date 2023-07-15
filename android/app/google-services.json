@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "168141880993",
+    "project_id": "splitify-84c29",
+    "storage_bucket": "splitify-84c29.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168141880993:android:30979c13c935e62e1abae0",
+        "android_client_info": {
+          "package_name": "com.kishorita.splitify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "168141880993-eir7q44sddapbl2n2vrghpkqc80rs824.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfiwFm_Z1lSoboSFQYYDlKKSYZn4mpyR0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "168141880993-eir7q44sddapbl2n2vrghpkqc80rs824.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
