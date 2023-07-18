@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pinput/pinput.dart';
 import 'package:splitify/Screens/login.dart';
 
@@ -13,9 +14,31 @@ class MyOtp extends StatefulWidget {
 class _MyOtpState extends State<MyOtp> {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
+  var code = '';
+  bool _isDisable = true;
+
+  Future<void> _verifyPhone() async {
+    setState(() {
+      _isDisable=true;
+    });
+    try {
+      PhoneAuthCredential credential =
+      PhoneAuthProvider.credential(
+          verificationId: MyPhone.verify, smsCode: code);
+
+      await auth.signInWithCredential(credential);
+      Navigator.pushNamedAndRemoveUntil(
+          context, 'home_page', (route) => false);
+    } catch (e) {
+      Fluttertoast.showToast(msg: "Wrong OTP");
+      setState(() {
+        _isDisable=false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    var code = '';
 
     return SafeArea(
       child: Scaffold(
@@ -64,6 +87,9 @@ class _MyOtpState extends State<MyOtp> {
                 Pinput(
                   onChanged: (value) {
                     code = value;
+                    setState(() {
+                      (value.length == 6)? _isDisable=false : _isDisable=true;
+                    });
                   },
                   length: 6,
                   showCursor: true,
@@ -75,21 +101,7 @@ class _MyOtpState extends State<MyOtp> {
                   height: 44,
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () async {
-                      try {
-                        PhoneAuthCredential credential =
-                            PhoneAuthProvider.credential(
-                                verificationId: MyPhone.verify, smsCode: code);
-
-                        await auth.signInWithCredential(credential);
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, 'home_page', (route) => false);
-                      } catch (e) {
-                        print('WRONG CODE');
-                      }
-
-                      // Navigator.pushNamed(context, 'home_page');
-                    },
+                    onPressed: _isDisable? null: _verifyPhone,
                     style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xff64CCC5),
                         shape: RoundedRectangleBorder(
